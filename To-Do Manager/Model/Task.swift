@@ -9,13 +9,13 @@ import UIKit
 
 // Тип задачи
 enum TaskPriority {
-    // текущая
+    // обычная задача
     case normal
-    // важная
+    // важная задача
     case important
 }
 
-// Состояние задачи
+// Cостояние задачи
 enum TaskStatus {
     // запланированная
     case planned
@@ -23,13 +23,13 @@ enum TaskStatus {
     case complated
 }
 
-// Требования к ниму, описывающуему сущность "Задача"
+// Требования протокола, описывающуего сущность "Задача"
 protocol TaskProtocol {
-    // название
+    // название задачи
     var title: String { get set }
-    // тип
+    // тип задачи
     var type: TaskPriority { get set }
-    // состояние
+    // cостояние задачи
     var status: TaskStatus { get set }
 }
 
