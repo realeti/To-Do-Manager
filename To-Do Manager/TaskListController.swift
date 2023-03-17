@@ -8,6 +8,9 @@
 import UIKit
 
 class TaskListController: UITableViewController {
+    
+    // порядок отображения задач по их статусу
+    var tasksStatusPosition: [TaskStatus] = [.planned, .complated]
 
     // хранилище задач
     var tasksStorage: TasksStorageProtocol = TasksStorage()
@@ -43,6 +46,16 @@ class TaskListController: UITableViewController {
         tasksStorage.loadTasks().forEach { task in
             tasks[task.type]?.append(task)
         }
+        
+        // сортировка списка задач
+        for (tasksGroupPriority, tasksGroup) in tasks {
+            tasks[tasksGroupPriority] = tasksGroup.sorted { task1, task2 in
+                let task1position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
+                let task2position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
+                
+                return task1position < task2position
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -66,7 +79,11 @@ class TaskListController: UITableViewController {
     
     // ячейка для строки таблицы
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return getConfiguratedTaskCell_constraints(for: indexPath)
+        // ячейка на основе констрейнтов
+        //return getConfiguratedTaskCell_constraints(for: indexPath)
+        
+        // ячейка на основе стека
+        return getConfiguratedCell_stack(for: indexPath)
     }
     
     // ячейка на основе ограничений
@@ -97,6 +114,34 @@ class TaskListController: UITableViewController {
         } else {
             symbolLabel?.textColor = .lightGray
             textLabel?.textColor = .lightGray
+        }
+        
+        return cell
+    }
+    
+    // ячейка на основе стека
+    private func getConfiguratedCell_stack(for indexPath: IndexPath) -> UITableViewCell {
+        // загружаем прототип ячейки по идентификатору
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellStack", for: indexPath) as! TaskCell
+        // получаем данные о задаче, которые необходимо вывести в ячейке
+        let taskType = sectionsTypesPosition[indexPath.section]
+        
+        guard let currentTask = tasks[taskType]?[indexPath.row] else {
+            return cell
+        }
+        
+        // изменяем текст в ячейке
+        cell.title.text = currentTask.title
+        // изменяем символ в ячейке
+        cell.symbol.text = getSymbolForTask(with: currentTask.status)
+        
+        // изменяем цвет текста и символа
+        if currentTask.status == .planned {
+            cell.title.textColor = .black
+            cell.symbol.textColor = .black
+        } else if currentTask.status == .complated {
+            cell.title.textColor = .lightGray
+            cell.symbol.textColor = .lightGray
         }
         
         return cell
