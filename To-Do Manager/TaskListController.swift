@@ -40,11 +40,8 @@ class TaskListController: UITableViewController {
         // загрузка задач
         loadTasks()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        // кнопка активации режима редактирования
+        navigationItem.rightBarButtonItem = editButtonItem
     }
     
     private func loadTasks() {
@@ -217,60 +214,39 @@ class TaskListController: UITableViewController {
         // возвращаем настроенный обьект
         return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
     }
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        // удаляем задачу
+        let taskType = sectionsTypesPosition[indexPath.section]
+        tasks[taskType]?.remove(at: indexPath.row)
+        
+        // удаляем строку соответствующей задачи
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    // ручная сортировка списка задач
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // секция из которой происходит перемещение
+        let taskTypeFrom = sectionsTypesPosition[sourceIndexPath.section]
+        // секция в которую происходит перемещение
+        let taskTypeTo = sectionsTypesPosition[destinationIndexPath.section]
+        
+        // безопасно извлекаем задачу, тем самым копируем её
+        guard let movedTask = tasks[taskTypeFrom]?[sourceIndexPath.row] else {
+            return
+        }
+        
+        // удаляем задачу с места, от куда она перенесена
+        tasks[taskTypeFrom]!.remove(at: sourceIndexPath.row)
+        // вставляем задачу на новую позицию
+        tasks[taskTypeTo]!.insert(movedTask, at: destinationIndexPath.row)
+        
+        // если секция изменилась, изменяем тип задачи в соответствии с новой позицией
+        if taskTypeFrom != taskTypeTo {
+            tasks[taskTypeTo]![destinationIndexPath.row].type = taskTypeTo
+        }
+        
+        // обновляем данные
+        tableView.reloadData()
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
