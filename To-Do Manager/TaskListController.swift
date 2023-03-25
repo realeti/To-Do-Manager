@@ -18,13 +18,13 @@ class TaskListController: UITableViewController {
     // коллекция задач
     var tasks: [TaskPriority: [TaskProtocol]] = [:] {
         didSet {
-            // сортировка списка задач
-            for (tasksGroupPriority, tasksGroup) in tasks {
-                tasks[tasksGroupPriority] = tasksGroup.sorted { task1, task2 in
-                    let task1position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
-                    let task2position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
+            // cортировка списка задач
+            for (taskGroupPriority, taskGroup) in tasks {
+                tasks[taskGroupPriority] = taskGroup.sorted {task1, task2 in
+                    let task1Position = tasksStatusPosition.firstIndex(of: task1.status) ?? 0
+                    let task2Position = tasksStatusPosition.firstIndex(of: task2.status) ?? 0
                     
-                    return task1position < task2position
+                    return task1Position < task2Position
                 }
             }
         }
@@ -34,6 +34,9 @@ class TaskListController: UITableViewController {
     // индекс в массиве соответствует индексу секции в таблице
     var sectionsTypesPosition: [TaskPriority] = [.important, .normal]
     
+    // свойство для передачи замыкания в TaskEditController
+    var doAfterEdit: ((String, TaskPriority, TaskStatus) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +44,7 @@ class TaskListController: UITableViewController {
         loadTasks()
 
         // кнопка активации режима редактирования
-        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
     private func loadTasks() {
@@ -69,11 +72,11 @@ class TaskListController: UITableViewController {
         // определяем приоритет задач для текущей секции
         let taskType = sectionsTypesPosition[section]
         
-        guard let currentTasksType = tasks[taskType] else {
+        guard let currentTaskType = tasks[taskType] else {
             return 0
         }
         
-        return currentTasksType.count
+        return currentTaskType.count
     }
     
     // ячейка для строки таблицы
@@ -169,17 +172,20 @@ class TaskListController: UITableViewController {
         } else if taskType == .normal {
             title = "Обычные"
         }
+        
         return title
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        // 1. Проверяем существование задачи
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 1. Определяем тип выбранной задачи
         let taskType = sectionsTypesPosition[indexPath.section]
+        
+        // 2. Определяем существует ли задача
         guard let _ = tasks[taskType]?[indexPath.row] else {
             return
         }
         
-        // 2. Убеждаемся, что задача не является выполненной
+        // 3. Убеждаемся что задача не выполнена
         guard tasks[taskType]![indexPath.row].status == .planned else {
             // снимаем выделение со строки
             tableView.deselectRow(at: indexPath, animated: true)
@@ -196,6 +202,8 @@ class TaskListController: UITableViewController {
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // получаем данные о задаче, которую необходимо перевести в статус "запланирована"
         let taskType = sectionsTypesPosition[indexPath.section]
+        
+        // проверяем, существует ли задача
         guard let _ = tasks[taskType]?[indexPath.row] else {
             return nil
         }
@@ -206,21 +214,22 @@ class TaskListController: UITableViewController {
         }
         
         // cоздаем действие для изменения статуса
-        let actionSwipeInstance = UIContextualAction(style: .normal, title: "Не выполнена") { _, _, _ in
+        let actionSwipeInstance = UIContextualAction(style: .normal, title: "Не выполнена", handler: {_, _, _ in
             self.tasks[taskType]![indexPath.row].status = .planned
             self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
-        }
+        })
         
         // возвращаем настроенный обьект
         return UISwipeActionsConfiguration(actions: [actionSwipeInstance])
     }
     
+    // обработка нажатия на иконку редактирования
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         // удаляем задачу
         let taskType = sectionsTypesPosition[indexPath.section]
         tasks[taskType]?.remove(at: indexPath.row)
         
-        // удаляем строку соответствующей задачи
+        // удаляем строку с табличного представления
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
