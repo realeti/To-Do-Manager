@@ -34,9 +34,6 @@ class TaskListController: UITableViewController {
     // индекс в массиве соответствует индексу секции в таблице
     var sectionsTypesPosition: [TaskPriority] = [.important, .normal]
     
-    // свойство для передачи замыкания в TaskEditController
-    var doAfterEdit: ((String, TaskPriority, TaskStatus) -> Void)?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

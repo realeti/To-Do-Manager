@@ -20,6 +20,9 @@ class TaskTypeController: UITableViewController {
     
     // 3. выбранный приоритет
     var selectedType: TaskPriority = .normal
+    
+    // обработчик выбора типа
+    var doAfterTypeSelected: ((TaskPriority) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,5 +62,15 @@ class TaskTypeController: UITableViewController {
         }
         
         return cell
+    }
+    
+    // после нажатия на строку таблицы, определяем какое значение выбрано и передаем в замыкание
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // получаем выбранный тип
+        let selectedType = taskTypesInformation[indexPath.row].type
+        // вызов обработчика
+        doAfterTypeSelected?(selectedType)
+        // переход к предыдущему экрану
+        navigationController?.popViewController(animated: true)
     }
 }
