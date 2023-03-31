@@ -70,14 +70,12 @@
 		C699BB7B29BF8F1500F70A57 /* To-Do Manager */ = {
 			isa = PBXGroup;
 			children = (
+				C6ED01A629D72ECE00D61EA6 /* Controllers */,
 				C6C77E6C29C0E6770075CC38 /* View */,
 				C699BB9229BF91D500F70A57 /* Model */,
-				C699BB9029BF90C200F70A57 /* TaskListController.swift */,
-				C627273729CEF64200E5E6B9 /* TaskEditController.swift */,
 				C699BB7C29BF8F1500F70A57 /* AppDelegate.swift */,
 				C699BB7E29BF8F1500F70A57 /* SceneDelegate.swift */,
 				C699BB8229BF8F1500F70A57 /* Main.storyboard */,
-				C627273929CF03F900E5E6B9 /* TaskTypeController.swift */,
 				C699BB8529BF8F1700F70A57 /* Assets.xcassets */,
 				C699BB8729BF8F1700F70A57 /* LaunchScreen.storyboard */,
 				C699BB8A29BF8F1700F70A57 /* Info.plist */,
@@ -110,6 +108,16 @@
 				C627274029CF0A1C00E5E6B9 /* TaskTypeCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		C6ED01A629D72ECE00D61EA6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C699BB9029BF90C200F70A57 /* TaskListController.swift */,
+				C627273729CEF64200E5E6B9 /* TaskEditController.swift */,
+				C627273929CF03F900E5E6B9 /* TaskTypeController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

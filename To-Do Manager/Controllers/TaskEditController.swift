@@ -27,6 +27,19 @@ class TaskEditController: UITableViewController {
         .normal: "Обычная"
     ]
     
+    @IBAction func saveTask(_ sender: UIBarButtonItem) {
+        // получаем актуальные значения
+        let title = taskTitle?.text ?? ""
+        let type = taskType
+        let status: TaskStatus = taskStatusSwitch.isOn ? .complated : .planned
+        
+        // вызываем обработчик
+        doAfterEdit?(title, type, status)
+        
+        // возвращаемся к предыдущему экрану
+        navigationController?.popViewController(animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
