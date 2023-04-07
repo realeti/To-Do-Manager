@@ -14,8 +14,8 @@ class TaskTypeController: UITableViewController {
     
     // 2. коллекция доступных типов задач с их описанием
     private var taskTypesInformation: [TypeCellDescription] = [
-        (type: .important, title: "Важная", description: "Такой тип задачи является наиболее приоритетным для выполнения. Все важные задачи выводятся в самом верху списка задач"),
-        (type: .normal, title: "Обычная", description: "Задача с обычным приоритетом")
+        (type: .important, title: TaskString.importantTasks.localazied, description: TaskString.importantTaskDescription.localazied),
+        (type: .normal, title: TaskString.normalTasks.localazied, description: TaskString.normalTaskDescription.localazied)
     ]
     
     // 3. выбранный приоритет

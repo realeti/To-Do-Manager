@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  To-Do Manager
+
+  Created by Apple M1 on 07.04.2023.
+  
+*/
+
+"TaskString_change" = "Изменить";
+"TaskString_delete" = "Удалить";
+"TaskString_editButton" = "Редактировать";
+"TaskString_doneButton" = "Готово";
+"TaskString_backButton" = "Назад";
+"TaskString_saveButton" = "Сохранить";
+"TaskString_notCompleted" = "Не выполнена";
+"TaskString_importantTasks" = "Важные";
+"TaskString_normalTasks" = "Обычные";
+"TaskString_importantTaskDescription" = "Такой тип задачи является наиболее приоритетным для выполнения. Все важные задачи выводятся в самом верху списка задач";
+"TaskString_normalTaskDescription" = "Задача с обычным приоритетом";
+"TaskString_taskTypeTitle" = "Тип задачи";
+"TaskString_taskStatusTitle" = "Выполнена";
+"TaskString_taskEditPlaceholder" = "Введите название задачи";

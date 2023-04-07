@@ -46,6 +46,14 @@ class TaskListController: UITableViewController {
 
         // кнопка активации режима редактирования
         navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.backButtonTitle = TaskString.backButton.localazied
+        
+        if isEditing {
+            editButtonItem.title = TaskString.doneButton.localazied
+        }
+        else {
+            editButtonItem.title = TaskString.editButton.localazied
+        }
     }
     
     // получение списка задач, их разбор и установка в свойство tasks
@@ -170,9 +178,9 @@ class TaskListController: UITableViewController {
         let taskType = sectionsTypesPosition[section]
         
         if taskType == .important {
-            title = "Важные"
+            title = TaskString.importantTasks.localazied
         } else if taskType == .normal {
-            title = "Обычные"
+            title = TaskString.normalTasks.localazied
         }
         
         return title
@@ -211,13 +219,13 @@ class TaskListController: UITableViewController {
         }
         
        // действие для изменения статуса на "запланирована"
-        let actionSwipeInstance = UIContextualAction(style: .normal, title: "Не выполнена") { _,_,_ in
+        let actionSwipeInstance = UIContextualAction(style: .normal, title: TaskString.notCompleted.localazied) { _,_,_ in
             self.tasks[taskType]![indexPath.row].status = .planned
             self.tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
         }
         
         // действие для перехода к экрану редактирования
-        let actionEditInstance = UIContextualAction(style: .normal, title: "Изменить") { _,_,_ in
+        let actionEditInstance = UIContextualAction(style: .normal, title: TaskString.change.localazied) { _,_,_ in
             // загрузка сцены со storyboard
             let editScreen = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TaskEditController") as! TaskEditController
             // передача значений редактируемой задачи
@@ -255,7 +263,7 @@ class TaskListController: UITableViewController {
             return nil
         }
         
-        let actionDeleteInstance = UIContextualAction(style: .destructive, title: "Удалить") { [self] _,_,_ in
+        let actionDeleteInstance = UIContextualAction(style: .destructive, title: TaskString.delete.localazied) { [self] _,_,_ in
             tasks[taskType]!.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }

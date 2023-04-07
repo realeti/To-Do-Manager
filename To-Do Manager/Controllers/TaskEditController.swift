@@ -16,6 +16,8 @@ class TaskEditController: UITableViewController {
     
     @IBOutlet var taskTitle: UITextField!
     @IBOutlet var taskTypeLabel: UILabel!
+    @IBOutlet var taskTypeTitle: UILabel!
+    @IBOutlet var taskStatusTitle: UILabel!
     @IBOutlet var taskStatusSwitch: UISwitch!
     
     // свойство для передачи замыкания в TaskListController
@@ -23,8 +25,8 @@ class TaskEditController: UITableViewController {
     
     // название типов задач
     private var taskTitles: [TaskPriority:String] = [
-        .important: "Важная",
-        .normal: "Обычная"
+        .important: TaskString.importantTasks.localazied,
+        .normal: TaskString.normalTasks.localazied
     ]
     
     @IBAction func saveTask(_ sender: UIBarButtonItem) {
@@ -51,6 +53,11 @@ class TaskEditController: UITableViewController {
         if taskStatus == .complated {
             taskStatusSwitch.isOn = true
         }
+        
+        navigationItem.rightBarButtonItem?.title = TaskString.saveButton.localazied
+        taskTypeTitle.text = TaskString.taskTypeTitle.localazied
+        taskStatusTitle.text = TaskString.taskStatusTitle.localazied
+        taskTitle.placeholder = TaskString.taskEditPlaceholder.localazied
     }
 
     // MARK: - Table view data source

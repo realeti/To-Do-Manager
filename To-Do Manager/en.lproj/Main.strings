@@ -1,0 +1,27 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "0gh-9f-s20"; */
+"0gh-9f-s20.text" = "Label";
+
+/* Class = "UILabel"; text = "Тип задачи"; ObjectID = "4Uq-Zm-k6p"; */
+"4Uq-Zm-k6p.text" = "Тип задачи";
+
+/* Class = "UIBarButtonItem"; title = "Сохранить"; ObjectID = "CjB-5t-sem"; */
+"CjB-5t-sem.title" = "Сохранить";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Cws-b8-rcN"; */
+"Cws-b8-rcN.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "DcL-qK-6lX"; */
+"DcL-qK-6lX.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "QBb-Kj-WFD"; */
+"QBb-Kj-WFD.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "Введите название задачи"; ObjectID = "Wnh-7U-K9o"; */
+"Wnh-7U-K9o.placeholder" = "Введите название задачи";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "efc-fD-49n"; */
+"efc-fD-49n.text" = "Label";
+
+/* Class = "UILabel"; text = "Выполнена"; ObjectID = "wbF-wZ-Yj9"; */
+"wbF-wZ-Yj9.text" = "Выполнена";
