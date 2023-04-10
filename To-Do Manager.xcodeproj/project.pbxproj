@@ -32,6 +32,7 @@
 		C638525D29E08517006FAD01 /* TaskString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskString.swift; sourceTree = "<group>"; };
 		C638526029E085FB006FAD01 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C638526229E0863F006FAD01 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C6539A7729E4578B0027B0C6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C699BB7929BF8F1500F70A57 /* To-Do Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "To-Do Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C699BB7C29BF8F1500F70A57 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C699BB7E29BF8F1500F70A57 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +179,7 @@
 				en,
 				Base,
 				uk,
+				ru,
 			);
 			mainGroup = C699BB7029BF8F1500F70A57;
 			productRefGroup = C699BB7A29BF8F1500F70A57 /* Products */;
@@ -230,6 +232,7 @@
 			children = (
 				C638526029E085FB006FAD01 /* en */,
 				C638526229E0863F006FAD01 /* uk */,
+				C6539A7729E4578B0027B0C6 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

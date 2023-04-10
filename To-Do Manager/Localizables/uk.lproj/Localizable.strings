@@ -8,7 +8,7 @@
 
 "TaskString_change" = "Змінити";
 "TaskString_delete" = "Видалити";
-"TaskString_editButton" = "Редагувати";
+"TaskString_editButton" = "Змінити";
 "TaskString_doneButton" = "Готово";
 "TaskString_backButton" = "Назад";
 "TaskString_saveButton" = "Зберегти";
@@ -20,3 +20,4 @@
 "TaskString_taskTypeTitle" = "Тип задачі";
 "TaskString_taskStatusTitle" = "Виконана";
 "TaskString_taskEditPlaceholder" = "Введіть назву задачі";
+"TaskString_error" = "Помилка!";

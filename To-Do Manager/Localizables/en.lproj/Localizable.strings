@@ -6,17 +6,18 @@
   
 */
 
-"TaskString_change" = "Изменить";
-"TaskString_delete" = "Удалить";
-"TaskString_editButton" = "Редактировать";
-"TaskString_doneButton" = "Готово";
-"TaskString_backButton" = "Назад";
-"TaskString_saveButton" = "Сохранить";
-"TaskString_notCompleted" = "Не выполнена";
-"TaskString_importantTasks" = "Важные";
-"TaskString_normalTasks" = "Обычные";
-"TaskString_importantTaskDescription" = "Такой тип задачи является наиболее приоритетным для выполнения. Все важные задачи выводятся в самом верху списка задач";
-"TaskString_normalTaskDescription" = "Задача с обычным приоритетом";
-"TaskString_taskTypeTitle" = "Тип задачи";
-"TaskString_taskStatusTitle" = "Выполнена";
-"TaskString_taskEditPlaceholder" = "Введите название задачи";
+"TaskString_change" = "Change";
+"TaskString_delete" = "Dekete";
+"TaskString_editButton" = "Edit";
+"TaskString_doneButton" = "Done";
+"TaskString_backButton" = "Back";
+"TaskString_saveButton" = "Save";
+"TaskString_notCompleted" = "Not completed";
+"TaskString_importantTasks" = "Importants";
+"TaskString_normalTasks" = "Normals";
+"TaskString_importantTaskDescription" = "This type of task is the highest priority for execution. All important tasks are displayed at the very top of the task list";
+"TaskString_normalTaskDescription" = "Normal priority task";
+"TaskString_taskTypeTitle" = "Task type";
+"TaskString_taskStatusTitle" = "Completed";
+"TaskString_taskEditPlaceholder" = "Enter the name of the task";
+"TaskString_error" = "Error!";

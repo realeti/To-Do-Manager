@@ -22,6 +22,7 @@ enum TaskString: String {
     case taskTypeTitle
     case taskStatusTitle
     case taskEditPlaceholder
+    case error
     
     var localazied: String {
         NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")

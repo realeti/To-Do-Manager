@@ -86,6 +86,10 @@ class TaskListController: UITableViewController {
             return 0
         }
         
+        if currentTaskType.count == 0 {
+            return 1
+        }
+        
         return currentTaskType.count
     }
     
@@ -94,12 +98,18 @@ class TaskListController: UITableViewController {
         // ячейка на основе констрейнтов
         //return getConfiguratedTaskCell_constraints(for: indexPath)
         
+        let taskType = sectionsTypesPosition[indexPath.section]
+        
+        if tasks[taskType]?.count == 0 {
+            return getConfiguratedCell_empty(for: indexPath)
+        }
+        
         // ячейка на основе стека
         return getConfiguratedCell_stack(for: indexPath)
     }
     
     // ячейка на основе ограничений
-    private func getConfiguratedTaskCell_constraints(for indexPath: IndexPath) -> UITableViewCell {
+    /*private func getConfiguratedTaskCell_constraints(for indexPath: IndexPath) -> UITableViewCell {
         // загружаем прототип ячейки по идентификатору
         let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellConstraints", for: indexPath)
         // получаем данные о задаче, которую необходимо вывести в ячейке
@@ -129,7 +139,7 @@ class TaskListController: UITableViewController {
         }
         
         return cell
-    }
+    }*/
     
     // ячейка на основе стека
     private func getConfiguratedCell_stack(for indexPath: IndexPath) -> UITableViewCell {
@@ -190,6 +200,10 @@ class TaskListController: UITableViewController {
         // 1. Определяем тип выбранной задачи
         let taskType = sectionsTypesPosition[indexPath.section]
         
+        if tasks[taskType]?.count == 0 {
+            return
+        }
+        
         // 2. Определяем существует ли задача
         guard let _ = tasks[taskType]?[indexPath.row] else {
             return
@@ -209,9 +223,24 @@ class TaskListController: UITableViewController {
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
     }
     
+    private func getConfiguratedCell_empty(for indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCellStack", for: indexPath) as! TaskCell
+        
+        cell.title.text = ""
+        cell.symbol.text = "Нет созданных задач"
+        cell.symbol.textColor = .lightGray
+        cell.selectionStyle = .none
+        
+        return cell
+    }
+    
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // получаем данные о задаче, по которой осуществлен свайп
         let taskType = sectionsTypesPosition[indexPath.section]
+        
+        if tasks[taskType]?.count == 0 {
+            return nil
+        }
         
         // проверяем, существует ли задача
         guard let _ = tasks[taskType]?[indexPath.row] else {
@@ -259,22 +288,49 @@ class TaskListController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let taskType = sectionsTypesPosition[indexPath.section]
         
+        if tasks[taskType]?.count == 0 {
+            return nil
+        }
+        
         guard let _ = tasks[taskType]?[indexPath.row] else {
             return nil
         }
         
         let actionDeleteInstance = UIContextualAction(style: .destructive, title: TaskString.delete.localazied) { [self] _,_,_ in
+            var i = 0
+            for _ in tasks[taskType]! {
+                i += 1
+            }
+            
             tasks[taskType]!.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            if indexPath.row > 0 {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
         
         return UISwipeActionsConfiguration(actions: [actionDeleteInstance])
     }
     
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        
+        if tasks[taskType]?.count == 0 {
+            return .none
+        }
+        
+        return .delete
+    }
+    
     // обработка нажатия на иконку редактирования
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        // удаляем задачу
         let taskType = sectionsTypesPosition[indexPath.section]
+        
+        if tasks[taskType]?.count == 0 {
+            return
+        }
+        
+        // удаляем задачу
         tasks[taskType]?.remove(at: indexPath.row)
         
         // удаляем строку с табличного представления

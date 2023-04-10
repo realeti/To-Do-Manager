@@ -31,15 +31,24 @@ class TaskEditController: UITableViewController {
     
     @IBAction func saveTask(_ sender: UIBarButtonItem) {
         // получаем актуальные значения
-        let title = taskTitle?.text ?? ""
+        var title = taskTitle?.text ?? ""
         let type = taskType
         let status: TaskStatus = taskStatusSwitch.isOn ? .complated : .planned
         
-        // вызываем обработчик
-        doAfterEdit?(title, type, status)
+        title = title.trimmingCharacters(in: .whitespaces)
         
-        // возвращаемся к предыдущему экрану
-        navigationController?.popViewController(animated: true)
+        if title.isEmpty {
+            let alert = UIAlertController(title: TaskString.error.localazied, message: TaskString.taskEditPlaceholder.localazied, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .destructive))
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+            // вызываем обработчик
+            doAfterEdit?(title, type, status)
+            
+            // возвращаемся к предыдущему экрану
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -83,6 +92,10 @@ class TaskEditController: UITableViewController {
                 taskTypeLabel?.text = taskTitles[taskType]
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 
 }
