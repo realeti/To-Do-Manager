@@ -297,15 +297,14 @@ class TaskListController: UITableViewController {
         }
         
         let actionDeleteInstance = UIContextualAction(style: .destructive, title: TaskString.delete.localazied) { [self] _,_,_ in
-            var i = 0
-            for _ in tasks[taskType]! {
-                i += 1
-            }
-            
+            // удаляем задачу
             tasks[taskType]!.remove(at: indexPath.row)
             
-            if indexPath.row > 0 {
+            // удаляем строку с табличного представления
+            if tasks[taskType]!.count > 0 {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
+            } else {
+                tableView.reloadData()
             }
         }
         
@@ -331,16 +330,31 @@ class TaskListController: UITableViewController {
         }
         
         // удаляем задачу
-        tasks[taskType]?.remove(at: indexPath.row)
+        tasks[taskType]!.remove(at: indexPath.row)
         
         // удаляем строку с табличного представления
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+        if tasks[taskType]!.count > 0 {
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } else {
+            tableView.reloadData()
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let taskType = sectionsTypesPosition[indexPath.section]
+        
+        if tasks[taskType]?.count == 0 {
+            return false
+        }
+        
+        return true
     }
     
     // ручная сортировка списка задач
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         // секция из которой происходит перемещение
         let taskTypeFrom = sectionsTypesPosition[sourceIndexPath.section]
+        
         // секция в которую происходит перемещение
         let taskTypeTo = sectionsTypesPosition[destinationIndexPath.section]
         
@@ -349,14 +363,21 @@ class TaskListController: UITableViewController {
             return
         }
         
+        var destinationIndex = destinationIndexPath.row
+        
+        if tasks[taskTypeTo]?.count == 0 && destinationIndex == 1 {
+            destinationIndex -= 1
+        }
+        
+        print("destinationIndex = \(destinationIndex)")
         // удаляем задачу с места, от куда она перенесена
         tasks[taskTypeFrom]!.remove(at: sourceIndexPath.row)
         // вставляем задачу на новую позицию
-        tasks[taskTypeTo]!.insert(movedTask, at: destinationIndexPath.row)
+        tasks[taskTypeTo]!.insert(movedTask, at: destinationIndex)
         
         // если секция изменилась, изменяем тип задачи в соответствии с новой позицией
         if taskTypeFrom != taskTypeTo {
-            tasks[taskTypeTo]![destinationIndexPath.row].type = taskTypeTo
+            tasks[taskTypeTo]![destinationIndex].type = taskTypeTo
         }
         
         // обновляем данные
