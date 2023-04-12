@@ -159,8 +159,16 @@ class TaskListController: UITableViewController {
         
         // изменяем цвет текста и символа
         if currentTask.status == .planned {
-            cell.title.textColor = .black
-            cell.symbol.textColor = .black
+            cell.title.textColor = .label
+            cell.symbol.textColor = .label
+            /*cell.symbol.textColor = UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor.systemOrange
+                default:
+                    return UIColor.label
+                }
+              }*/
         } else if currentTask.status == .complated {
             cell.title.textColor = .lightGray
             cell.symbol.textColor = .lightGray
@@ -369,7 +377,6 @@ class TaskListController: UITableViewController {
             destinationIndex -= 1
         }
         
-        print("destinationIndex = \(destinationIndex)")
         // удаляем задачу с места, от куда она перенесена
         tasks[taskTypeFrom]!.remove(at: sourceIndexPath.row)
         // вставляем задачу на новую позицию
