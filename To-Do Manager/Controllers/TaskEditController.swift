@@ -33,7 +33,7 @@ class TaskEditController: UITableViewController {
         // получаем актуальные значения
         var title = taskTitle?.text ?? ""
         let type = taskType
-        let status: TaskStatus = taskStatusSwitch.isOn ? .complated : .planned
+        let status: TaskStatus = taskStatusSwitch.isOn ? .completed : .planned
         
         title = title.trimmingCharacters(in: .whitespaces)
         
@@ -59,7 +59,7 @@ class TaskEditController: UITableViewController {
         // обновление метки в соответствии с текущим типом
         taskTypeLabel?.text = taskTitles[taskType]
         // обновляем статус задачи
-        if taskStatus == .complated {
+        if taskStatus == .completed {
             taskStatusSwitch.isOn = true
         }
         

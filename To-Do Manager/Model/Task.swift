@@ -20,7 +20,7 @@ enum TaskStatus: Int {
     // запланированная
     case planned
     // завершенная
-    case complated
+    case completed
 }
 
 // Требования протокола, описывающуего сущность "Задача"

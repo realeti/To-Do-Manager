@@ -38,7 +38,7 @@ class TasksStorage: TasksStorageProtocol {
                 continue
             }
             let type: TaskPriority = (typeRaw == "important") ? .important : .normal
-            let status: TaskStatus = (statusRaw == "planned") ? .planned : .complated
+            let status: TaskStatus = (statusRaw == "planned") ? .planned : .completed
             
             resultTasks.append(Task(title: title, type: type, status: status))
         }

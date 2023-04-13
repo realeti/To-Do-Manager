@@ -10,7 +10,7 @@ import UIKit
 class TaskListController: UITableViewController {
     
     // порядок отображения задач по их статусу
-    var tasksStatusPosition: [TaskStatus] = [.planned, .complated]
+    var tasksStatusPosition: [TaskStatus] = [.planned, .completed]
 
     // хранилище задач
     var tasksStorage: TasksStorageProtocol = TasksStorage()
@@ -164,12 +164,12 @@ class TaskListController: UITableViewController {
             /*cell.symbol.textColor = UIColor { traitCollection in
                 switch traitCollection.userInterfaceStyle {
                 case .dark:
-                    return UIColor.systemOrange
+                    return .white
                 default:
-                    return UIColor.label
+                    return .black
                 }
-              }*/
-        } else if currentTask.status == .complated {
+            }*/
+        } else if currentTask.status == .completed {
             cell.title.textColor = .lightGray
             cell.symbol.textColor = .lightGray
         }
@@ -183,7 +183,7 @@ class TaskListController: UITableViewController {
         
         if status == .planned {
             resultSymbol = "\u{25CB}"
-        } else if status == .complated {
+        } else if status == .completed {
             resultSymbol = "\u{25C9}"
         } else {
             resultSymbol = ""
@@ -225,7 +225,7 @@ class TaskListController: UITableViewController {
         }
         
         // 3. Отмечаем задачу как выполненную
-        tasks[taskType]![indexPath.row].status = .complated
+        tasks[taskType]![indexPath.row].status = .completed
         
         // 4. Перезагружаем секцию таблицы
         tableView.reloadSections(IndexSet(arrayLiteral: indexPath.section), with: .automatic)
@@ -272,9 +272,11 @@ class TaskListController: UITableViewController {
             // передача обработчика для сохранения задачи
             editScreen.doAfterEdit = { [unowned self] title, type, status in
                 let editedTask = Task(title: title, type: type, status: status)
-                tasks[taskType]![indexPath.row] = editedTask
+                tasks[taskType]!.remove(at: indexPath.row)
+                tasks[type]?.append(editedTask)
                 tableView.reloadData()
             }
+
             // переход к экрану редактирования
             self.navigationController?.pushViewController(editScreen, animated: true)
         }
@@ -284,7 +286,7 @@ class TaskListController: UITableViewController {
         // cоздаем обьект, описывающий доступные действия в зависимости от статуса задачи будет отображено 1 или 2 действия
         let actionsConfiguration: UISwipeActionsConfiguration
         
-        if tasks[taskType]![indexPath.row].status == .complated {
+        if tasks[taskType]![indexPath.row].status == .completed {
             actionsConfiguration = UISwipeActionsConfiguration(actions: [actionSwipeInstance, actionEditInstance])
         } else {
             actionsConfiguration = UISwipeActionsConfiguration(actions: [actionEditInstance])
